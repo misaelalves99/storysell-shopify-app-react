@@ -1,0 +1,10 @@
+:root {
+  --primary-color: #0070f3;
+  --secondary-color: #005bb5;
+  --accent-color: #ff4081;
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --font-family: 'Inter', sans-serif;
+}

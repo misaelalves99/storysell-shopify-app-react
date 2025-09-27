@@ -1,0 +1,44 @@
+/* storysell-shopify-app/src/components/stories/HomeStories.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stories {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.stories::-webkit-scrollbar {
+  height: 6px;
+}
+
+.stories::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+.card {
+  min-width: 220px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  padding: 0.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.card video {
+  width: 100%;
+  border-radius: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.card h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
