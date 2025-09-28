@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "../../types/product.types";
 import * as fakeApi from "../../lib/fakeApi/fakeProductApi";
+import { useBilling } from "../../hooks/useBilling";
 import styles from "./ProductStories.module.css";
 
 export const ProductStories: React.FC = () => {
+  const { currentPlan } = useBilling();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-
-  // Simulando plano ativo (para dev)
-  const currentPlan = { id: "complete" }; // "free" | "intermediate" | "complete"
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,7 +19,7 @@ export const ProductStories: React.FC = () => {
     fetchProducts();
   }, []);
 
-  if (currentPlan.id !== "complete" && currentPlan.id !== "intermediate") return null;
+  if (currentPlan.id === "free") return null; // só liberado para intermediate ou complete
   if (loading) return <p>Loading products...</p>;
 
   return (

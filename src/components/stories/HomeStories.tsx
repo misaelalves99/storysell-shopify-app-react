@@ -17,7 +17,7 @@ export const HomeStories: React.FC = () => {
     fetch();
   }, []);
 
-  if (!currentPlan || currentPlan.id !== "complete") return null;
+  if (currentPlan.id !== "complete") return null; // só completo
   if (stories.length === 0) return <p>Loading stories...</p>;
 
   return (

@@ -5,11 +5,16 @@ import { Home } from "./pages/Home";
 import { ProductPage } from "./pages/ProductPage";
 import { CollectionPage } from "./pages/CollectionPage";
 import { Dashboard } from "./pages/Dashboard";
-import { CheckoutPlan } from "./pages/CheckoutPlan"; // ✅ Nova rota
+import { CheckoutPlan } from "./pages/CheckoutPlan";
+import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
+
+import { Layout } from "./components/layout/Layout";
 
 import { ProductProvider } from "./contexts/ProductContext/ProductProvider";
 import { CollectionProvider } from "./contexts/CollectionContext/CollectionProvider";
 import { BillingProvider } from "./contexts/BillingContext/BillingProvider";
+import { AuthProvider } from "./contexts/auth/AuthContext";
 
 import styles from "./App.module.css";
 
@@ -17,19 +22,25 @@ export const App: React.FC = () => {
   return (
     <div className={styles.app}>
       <Router>
-        <BillingProvider>
-          <ProductProvider>
-            <CollectionProvider>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/products" element={<ProductPage />} />
-                <Route path="/collections" element={<CollectionPage />} />
-                <Route path="/dashboard/*" element={<Dashboard />} />
-                <Route path="/checkout/:planId" element={<CheckoutPlan />} /> {/* ✅ */}
-              </Routes>
-            </CollectionProvider>
-          </ProductProvider>
-        </BillingProvider>
+        <AuthProvider>
+          <BillingProvider>
+            <ProductProvider>
+              <CollectionProvider>
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/products" element={<ProductPage />} />
+                    <Route path="/collections" element={<CollectionPage />} />
+                    <Route path="/dashboard/*" element={<Dashboard />} />
+                    <Route path="/checkout/:planId" element={<CheckoutPlan />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
+                  </Routes>
+                </Layout>
+              </CollectionProvider>
+            </ProductProvider>
+          </BillingProvider>
+        </AuthProvider>
       </Router>
     </div>
   );

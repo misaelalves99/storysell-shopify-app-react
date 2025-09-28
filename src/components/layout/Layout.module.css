@@ -1,0 +1,12 @@
+/* src/components/layout/Layout.module.css */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f8f9fa; /* fundo suave */
+}

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "../../types/product.types";
 import * as fakeApi from "../../lib/fakeApi/fakeCollectionApi";
+import { useBilling } from "../../hooks/useBilling";
 import styles from "./CollectionCarousel.module.css";
 
 type CollectionType = {
@@ -11,12 +12,10 @@ type CollectionType = {
 };
 
 export const CollectionCarousel: React.FC = () => {
+  const { currentPlan } = useBilling();
   const [collections, setCollections] = useState<CollectionType[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Simulando plano ativo
-  const currentPlan = { id: "complete" };
 
   useEffect(() => {
     const fetchCollections = async () => {
@@ -27,7 +26,9 @@ export const CollectionCarousel: React.FC = () => {
     fetchCollections();
   }, []);
 
-  if (currentPlan.id !== "complete") return null;
+  // Bloqueia se o plano não for completo
+  if (!currentPlan || currentPlan.id !== "complete") return null;
+
   if (loading) return <p>Loading collections...</p>;
   if (collections.length === 0) return <p>No collections available.</p>;
 

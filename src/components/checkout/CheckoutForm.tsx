@@ -41,10 +41,8 @@ export const CheckoutForm: React.FC<Props> = ({ planId, onSuccess }) => {
     try {
       // Simula processamento de pagamento
       await new Promise((res) => setTimeout(res, 1500));
-
       // Fake API de assinatura
       await billingApi.subscribeToPlan(planId);
-
       setSuccess(true);
       setTimeout(() => onSuccess(), 2000);
     } catch (err) {
@@ -86,7 +84,12 @@ export const CheckoutForm: React.FC<Props> = ({ planId, onSuccess }) => {
       />
 
       <h3>Método de Pagamento</h3>
-      <select name="paymentMethod" value={form.paymentMethod} onChange={handleChange}>
+      <select
+        name="paymentMethod"
+        value={form.paymentMethod}
+        onChange={handleChange}
+        className={styles.paymentSelect}
+      >
         <option value="card">Cartão de Crédito</option>
         <option value="pix">PIX</option>
         <option value="boleto">Boleto Bancário</option>

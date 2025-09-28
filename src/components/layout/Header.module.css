@@ -1,20 +1,50 @@
+/* src/components/layout/Header.module.css */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #0070f3;
-  color: white;
+  background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+  color: #fff;
 }
+
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
 }
-.nav a {
-  margin-left: 1rem;
-  color: white;
-  text-decoration: none;
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
 .nav a:hover {
   text-decoration: underline;
+}
+
+.logoutBtn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #2575fc;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logoutBtn:hover {
+  background: #f1f1f1;
+}
+
+.user {
+  margin-right: 0.5rem;
+  font-weight: 500;
 }
