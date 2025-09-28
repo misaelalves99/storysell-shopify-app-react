@@ -1,4 +1,4 @@
-// src/pages/Home.tsx
+// storysell-shopify-app/src/pages/Home.tsx
 import React, { useEffect, useState } from "react";
 import { Product } from "../types/product.types";
 import { Story } from "../types/story.types";
@@ -6,6 +6,8 @@ import { getProducts } from "../lib/fakeApi/fakeProductApi";
 import { getStories } from "../lib/fakeApi/fakeStoryApi";
 import { getCollections } from "../lib/fakeApi/fakeCollectionApi";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/auth/AuthContext";
+import { useBilling } from "../hooks/useBilling";
 import styles from "./Home.module.css";
 
 type CollectionWithProducts = {
@@ -14,23 +16,16 @@ type CollectionWithProducts = {
   products: Product[];
 };
 
-type Plan = {
-  id: "free" | "intermediate" | "complete";
-  name: string;
-  price: string;
-  description: string;
-  features: string[];
-};
-
 export const Home: React.FC = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [collections, setCollections] = useState<CollectionWithProducts[]>([]);
+
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { currentPlan } = useBilling();
 
-  const currentPlan = { id: "free" }; // "free" | "intermediate" | "complete"
-
-  const plans: Plan[] = [
+  const plans = [
     {
       id: "free",
       name: "Free Plan",
@@ -64,6 +59,10 @@ export const Home: React.FC = () => {
   }, []);
 
   const handleSubscribe = (planId: string) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     navigate(`/checkout/${planId}`);
   };
 
@@ -71,14 +70,14 @@ export const Home: React.FC = () => {
     <div className={styles.container}>
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1>Boost your Shopify store with Stories & Reels</h1>
+          <h1>Impulsione sua loja Shopify com Stories & Reels</h1>
           <p>
-            Increase engagement and sales by adding video stories on product pages,
-            highlights on the homepage, and carousel reels for collections.
+            Aumente o engajamento e as vendas adicionando vídeos de stories nas páginas de produtos,
+            destaques na página inicial e carrosséis de coleções.
           </p>
         </div>
       </section>
-
+      
       <section className={styles.plans}>
         <h2>Escolha seu plano</h2>
         <div className={styles.plansGrid}>
@@ -103,7 +102,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {(currentPlan.id === "intermediate" || currentPlan.id === "complete") && products.length > 0 && (
+      {(currentPlan?.id === "intermediate" || currentPlan?.id === "complete") && products.length > 0 && (
         <section className={styles.productStories}>
           <h2>Product Stories</h2>
           <div className={styles.productsGrid}>
@@ -117,7 +116,7 @@ export const Home: React.FC = () => {
         </section>
       )}
 
-      {currentPlan.id === "complete" && stories.length > 0 && (
+      {currentPlan?.id === "complete" && stories.length > 0 && (
         <section className={styles.featuredStories}>
           <h2>Featured Stories</h2>
           <div className={styles.storiesGrid}>
@@ -131,7 +130,7 @@ export const Home: React.FC = () => {
         </section>
       )}
 
-      {currentPlan.id === "complete" && collections.length > 0 && (
+      {currentPlan?.id === "complete" && collections.length > 0 && (
         <section className={styles.collectionCarousel}>
           <h2>Reels Collection</h2>
           <div className={styles.carouselGrid}>

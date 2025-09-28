@@ -33,11 +33,7 @@ export const ProductStories: React.FC = () => {
         {products.slice(0, 8).map((p) => (
           <div key={p.id} className={styles.card}>
             <div className={styles.imageWrapper}>
-              <img
-                src={p.images[0]}
-                alt={p.title}
-                className={styles.productImage}
-              />
+              <img src={p.images[0]} alt={p.title} className={styles.productImage} />
               <div className={styles.overlay}>
                 <p className={styles.price}>${p.price.toFixed(2)}</p>
                 <button className={styles.cta}>View</button>
