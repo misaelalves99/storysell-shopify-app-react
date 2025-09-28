@@ -1,11 +1,15 @@
 // src/components/layout/Header.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../contexts/auth/AuthContext';
+import { FaUserCircle } from 'react-icons/fa'; // Ícone de perfil
 
 export const Header: React.FC = () => {
   const { user, logout } = useAuth();
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const toggleMenu = () => setOpenMenu(prev => !prev);
 
   return (
     <header className={styles.header}>
@@ -16,17 +20,31 @@ export const Header: React.FC = () => {
         <Link to="/collections">Collections</Link>
         <Link to="/dashboard">Dashboard</Link>
 
-        {user ? (
-          <>
-            <span className={styles.user}>Olá, {user.fullName}</span>
-            <button className={styles.logoutBtn} onClick={logout}>Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Registrar</Link>
-          </>
-        )}
+        {/* Ícone de Perfil */}
+        <div className={styles.profileWrapper}>
+          <FaUserCircle
+            className={styles.profileIcon}
+            size={28}
+            onClick={toggleMenu}
+          />
+          {openMenu && (
+            <div className={styles.profileMenu}>
+              {user ? (
+                <>
+                  <span>Olá, {user.fullName}</span>
+                  <button onClick={logout} className={styles.logoutBtn}>
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setOpenMenu(false)}>Login</Link>
+                  <Link to="/register" onClick={() => setOpenMenu(false)}>Registrar</Link>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   );

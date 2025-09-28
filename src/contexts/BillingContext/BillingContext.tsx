@@ -1,11 +1,12 @@
-// src/contexts/BillingContext/BillingContext.tsx
+// storysell-shopify-app/src/contexts/BillingContext/BillingContext.ts
 import { createContext } from "react";
 import { BillingPlan } from "../../types/billing.types";
 
 export type BillingContextType = {
   plans: BillingPlan[];
-  currentPlan?: BillingPlan; // ✅ adicionamos aqui
-  subscribe?: (planId: string) => Promise<void>; // opcional, se você quiser implementar assinatura
+  currentPlan?: BillingPlan;
+  subscribe: (planId: string) => Promise<void>;
 };
 
+// Criamos apenas o contexto aqui
 export const BillingContext = createContext<BillingContextType | undefined>(undefined);

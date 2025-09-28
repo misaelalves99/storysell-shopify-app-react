@@ -20,7 +20,7 @@ export const RegisterPage: React.FC = () => {
     setLoading(true);
     try {
       await register(fullName, email, password);
-      navigate("/dashboard");
+      navigate("/");
     } catch (err: any) {
       setError(err.message);
     } finally {

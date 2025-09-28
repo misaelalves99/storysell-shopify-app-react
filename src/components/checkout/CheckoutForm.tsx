@@ -1,6 +1,6 @@
 // storysell-shopify-app/src/components/checkout/CheckoutForm.tsx
 import React, { useState } from "react";
-import * as billingApi from "../../api/billing.api";
+import { useBilling } from "../../hooks/useBilling";
 import styles from "../../pages/CheckoutPlan.module.css";
 
 type Props = {
@@ -19,6 +19,8 @@ type FormData = {
 };
 
 export const CheckoutForm: React.FC<Props> = ({ planId, onSuccess }) => {
+  const { subscribe } = useBilling();
+
   const [form, setForm] = useState<FormData>({
     fullName: "",
     email: "",
@@ -31,23 +33,43 @@ export const CheckoutForm: React.FC<Props> = ({ planId, onSuccess }) => {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    if (!form.fullName || !form.email || !form.phone) return false;
+    if (form.paymentMethod === "card") {
+      return form.cardNumber && form.expiry && form.cvv;
+    }
+    return true;
+  };
+
   const handleSubscribe = async () => {
+    if (!validateForm()) {
+      setError("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+
     setLoading(true);
+    setError(null);
+
     try {
       // Simula processamento de pagamento
       await new Promise((res) => setTimeout(res, 1500));
-      // Fake API de assinatura
-      await billingApi.subscribeToPlan(planId);
+
+      // Usa contexto de billing
+      await subscribe(planId);
+
       setSuccess(true);
       setTimeout(() => onSuccess(), 2000);
     } catch (err) {
       console.error(err);
-      alert("Falha ao processar o pagamento.");
+      setError("Falha ao processar o pagamento. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -126,6 +148,8 @@ export const CheckoutForm: React.FC<Props> = ({ planId, onSuccess }) => {
           </div>
         </>
       )}
+
+      {error && <p className={styles.error}>{error}</p>}
 
       <button
         type="submit"

@@ -19,16 +19,30 @@ export const ProductStories: React.FC = () => {
     fetchProducts();
   }, []);
 
-  if (currentPlan.id === "free") return null; // só liberado para intermediate ou complete
+  // 🔹 Bloqueia se plano for "free"
+  if (!currentPlan || currentPlan.id === "free") return null;
+
   if (loading) return <p>Loading products...</p>;
+  if (products.length === 0) return <p>No products available.</p>;
 
   return (
     <section className={styles.container}>
       <h2>Product Stories</h2>
-      <div className={styles.products}>
-        {products.slice(0, 5).map((p) => (
+
+      <div className={styles.scrollWrapper}>
+        {products.slice(0, 8).map((p) => (
           <div key={p.id} className={styles.card}>
-            <img src={p.images[0]} alt={p.title} className={styles.productImage} />
+            <div className={styles.imageWrapper}>
+              <img
+                src={p.images[0]}
+                alt={p.title}
+                className={styles.productImage}
+              />
+              <div className={styles.overlay}>
+                <p className={styles.price}>${p.price.toFixed(2)}</p>
+                <button className={styles.cta}>View</button>
+              </div>
+            </div>
             <h3>{p.title}</h3>
           </div>
         ))}

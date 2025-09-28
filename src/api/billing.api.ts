@@ -25,7 +25,7 @@ export const getBillingPlans = async (): Promise<BillingPlan[]> => {
  */
 export const subscribeToPlan = async (
   planId: string
-): Promise<{ success: boolean }> => {
+): Promise<{ success: boolean; planId: string }> => {
   if (useFakeApi) {
     return fakeApi.subscribeToPlan(planId);
   }
@@ -36,5 +36,18 @@ export const subscribeToPlan = async (
     body: JSON.stringify({ planId }),
   });
   if (!response.ok) throw new Error("Failed to subscribe to plan");
+  return response.json();
+};
+
+/**
+ * Get current subscribed plan
+ */
+export const getCurrentPlan = async (): Promise<BillingPlan | null> => {
+  if (useFakeApi) {
+    return fakeApi.getCurrentPlan();
+  }
+
+  const response = await fetch(`${API_URL}/billing/current-plan`);
+  if (!response.ok) throw new Error("Failed to fetch current plan");
   return response.json();
 };

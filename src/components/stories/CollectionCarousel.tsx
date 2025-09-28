@@ -19,18 +19,23 @@ export const CollectionCarousel: React.FC = () => {
 
   useEffect(() => {
     const fetchCollections = async () => {
-      const data = await fakeApi.getCollections();
-      setCollections(data);
-      setLoading(false);
+      try {
+        const data = await fakeApi.getCollections();
+        setCollections(data);
+      } catch (err) {
+        console.error("Erro ao carregar coleções:", err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCollections();
   }, []);
 
-  // Bloqueia se o plano não for completo
+  // 🔒 Bloqueia se o plano não for "complete"
   if (!currentPlan || currentPlan.id !== "complete") return null;
 
-  if (loading) return <p>Loading collections...</p>;
-  if (collections.length === 0) return <p>No collections available.</p>;
+  if (loading) return <div className={styles.loader}>Carregando coleções...</div>;
+  if (collections.length === 0) return <p>Nenhuma coleção disponível.</p>;
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? collections.length - 1 : prev - 1));
@@ -44,11 +49,15 @@ export const CollectionCarousel: React.FC = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Top Collections</h2>
+      <h2 className={styles.title}>Top Collections</h2>
 
-      {/* Carrossel */}
+      {/* Carrossel principal */}
       <div className={styles.carouselWrapper}>
-        <button className={styles.navButton} onClick={handlePrev}>
+        <button
+          className={styles.navButton}
+          onClick={handlePrev}
+          aria-label="Coleção anterior"
+        >
           &lt;
         </button>
 
@@ -60,33 +69,43 @@ export const CollectionCarousel: React.FC = () => {
                 <div key={p.id} className={styles.productCard}>
                   <img src={p.images[0]} alt={p.title} />
                   <p>{p.title}</p>
+                  <p className={styles.price}>R${p.price.toFixed(2)}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <button className={styles.navButton} onClick={handleNext}>
+        <button
+          className={styles.navButton}
+          onClick={handleNext}
+          aria-label="Próxima coleção"
+        >
           &gt;
         </button>
       </div>
 
-      {/* Sessões adicionais de destaque */}
+      {/* Destaques adicionais */}
       <div className={styles.additionalSections}>
-        {collections.map((c) => (
-          <div key={c.id} className={styles.highlightSection}>
-            <h4>{c.name} Highlights</h4>
-            <div className={styles.highlightProducts}>
-              {c.products.slice(0, 2).map((p) => (
-                <div key={p.id} className={styles.highlightCard}>
-                  <img src={p.images[0]} alt={p.title} />
-                  <p>{p.title}</p>
-                  <p className={styles.price}>${p.price.toFixed(2)}</p>
-                </div>
-              ))}
+        <h3 className={styles.subtitle}>Destaques</h3>
+        <div className={styles.highlightsGrid}>
+          {collections.map((c) => (
+            <div key={c.id} className={styles.highlightSection}>
+              <h4>{c.name}</h4>
+              <div className={styles.highlightProducts}>
+                {c.products.slice(0, 2).map((p) => (
+                  <div key={p.id} className={styles.highlightCard}>
+                    <img src={p.images[0]} alt={p.title} />
+                    <div className={styles.highlightInfo}>
+                      <p>{p.title}</p>
+                      <p className={styles.price}>R${p.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
