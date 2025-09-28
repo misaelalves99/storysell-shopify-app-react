@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { ProductPage } from "./pages/ProductPage";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { CollectionPage } from "./pages/CollectionPage";
 import { Dashboard } from "./pages/Dashboard";
 import { CheckoutPlan } from "./pages/CheckoutPlan";
@@ -30,6 +31,7 @@ export const App: React.FC = () => {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/products" element={<ProductPage />} />
+                    <Route path="/products/:id" element={<ProductDetailPage />} />
                     <Route path="/collections" element={<CollectionPage />} />
                     <Route path="/dashboard/*" element={<Dashboard />} />
                     <Route path="/checkout/:planId" element={<CheckoutPlan />} />
