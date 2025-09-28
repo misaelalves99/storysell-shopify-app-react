@@ -16,7 +16,7 @@ export const Hero: React.FC<Props> = ({ onOpenPlans }) => {
           destaques na página inicial e carrosséis de coleções.
         </p>
         <button className={styles.openPlansBtn} onClick={onOpenPlans}>
-          Ver Planos
+            Ver Planos
         </button>
       </div>
     </section>

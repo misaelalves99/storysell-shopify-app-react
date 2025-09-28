@@ -16,6 +16,11 @@ import { ProductStories } from "../components/Home/ProductStories";
 import { FeaturedStories } from "../components/Home/FeaturedStories";
 import { CollectionsCarousel } from "../components/Home/CollectionsCarousel";
 
+// Novos componentes
+import { FeaturesHighlight } from "../components/Home/FeaturesHighlight";
+import { Testimonials } from "../components/Home/Testimonials";
+import { PlanCards } from "../components/Home/PlanCards";
+
 export type CollectionWithProducts = {
   id: string;
   name: string;
@@ -27,6 +32,7 @@ export const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [collections, setCollections] = useState<CollectionWithProducts[]>([]);
   const [isPlansOpen, setIsPlansOpen] = useState(false);
+  const [loadingContent, setLoadingContent] = useState(true);
 
   const { user } = useAuth();
   const { currentPlan } = useBilling();
@@ -56,44 +62,81 @@ export const Home: React.FC = () => {
     },
   ];
 
+  // 🔹 Busca dados premium
   useEffect(() => {
-    const fetchData = async () => {
-      setStories(await getStories());
-      setProducts(await getProducts());
-      setCollections(await getCollections());
-    };
-    fetchData();
-  }, []);
+    const fetchContent = async () => {
+      if (!currentPlan || currentPlan.id === "free") {
+        setLoadingContent(false);
+        return;
+      }
 
-  // Função para abrir modal de planos com verificação de login
-  const handleOpenPlans = () => {
+      setProducts(await getProducts());
+      setStories(await getStories());
+      setCollections(await getCollections());
+      setLoadingContent(false);
+    };
+
+    fetchContent();
+  }, [currentPlan]);
+
+  const handleOpenPlans = () => setIsPlansOpen(true);
+
+  const handleSubscribe = (planId: string) => {
     if (!user) {
       navigate("/login");
       return;
     }
-    setIsPlansOpen(true);
+    navigate(`/checkout/${planId}`);
   };
+
+  // Usuário logado com plano válido
+  const hasIntermediatePlan = !!user && (currentPlan?.id === "intermediate" || currentPlan?.id === "complete");
+  const hasCompletePlan = !!user && currentPlan?.id === "complete";
+
+  // Usuário tem plano pago (intermediate ou complete)
+  const hasPaidPlan = !!user && currentPlan && currentPlan.id !== "free";
 
   return (
     <div>
       {/* Hero */}
       <Hero onOpenPlans={handleOpenPlans} />
 
-      {/* Modal de Planos */}
-      <PlansModal isOpen={isPlansOpen} plans={plans} onClose={() => setIsPlansOpen(false)} />
+      {/* Modal de Planos - só aparece se não tiver plano pago */}
+      {!hasPaidPlan && <PlansModal isOpen={isPlansOpen} plans={plans} onClose={() => setIsPlansOpen(false)} />}
 
-      {/* Stories de Produtos */}
-      {(currentPlan?.id === "intermediate" || currentPlan?.id === "complete") && products.length > 0 && (
+      {/* Features / Destaques do App - propaganda */}
+      {!hasPaidPlan && (
+        <FeaturesHighlight
+          features={[
+            { id: "f1", title: "Stories na Home", description: "Destaque seus produtos com stories interativos." },
+            { id: "f2", title: "Carrossel de Coleções", description: "Mostre várias coleções de forma elegante." },
+            { id: "f3", title: "Analytics de Engajamento", description: "Veja quais produtos estão mais visualizados." },
+          ]}
+        />
+      )}
+
+      {/* Cards de Assinatura - propaganda */}
+      {!hasPaidPlan && <PlanCards plans={plans} onSubscribe={handleSubscribe} />}
+
+      {/* Conteúdos premium apenas para usuários com plano pago */}
+      {!loadingContent && hasIntermediatePlan && products.length > 0 && (
         <ProductStories products={products.slice(0, 10)} />
       )}
-
-      {/* Stories em Destaque */}
-      {currentPlan?.id === "complete" && stories.length > 0 && <FeaturedStories stories={stories} />}
-
-      {/* Carrossel de Coleções */}
-      {currentPlan?.id === "complete" && collections.length > 0 && (
+      {!loadingContent && hasCompletePlan && stories.length > 0 && (
+        <FeaturedStories stories={stories} />
+      )}
+      {!loadingContent && hasCompletePlan && collections.length > 0 && (
         <CollectionsCarousel collections={collections} />
       )}
+
+      {/* Testimonials - sempre visíveis */}
+      <Testimonials
+        testimonials={[
+          { id: "t1", name: "Ana Souza", avatar: "/assets/avatars/ana.jpg", comment: "Melhor app para engajar meus clientes!" },
+          { id: "t2", name: "Carlos Lima", avatar: "/assets/avatars/carlos.jpg", comment: "Meus produtos agora são mais visualizados." },
+          { id: "t3", name: "Maria Fernanda", avatar: "/assets/avatars/maria.jpg", comment: "Recomendo para qualquer loja Shopify!" },
+        ]}
+      />
     </div>
   );
 };
