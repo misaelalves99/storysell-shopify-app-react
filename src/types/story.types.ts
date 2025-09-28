@@ -5,6 +5,6 @@ export type Story = {
   title: string;
   image: string;        // thumbnail ou capa do story
   link?: string;        // vídeo ou conteúdo
-  products?: string[];  // array de product IDs
+  products: string[];  // array de product IDs
   createdAt: string;
 };

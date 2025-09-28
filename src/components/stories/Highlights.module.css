@@ -1,0 +1,65 @@
+/* storysell-shopify-app/src/components/stories/Highlights.module.css */
+
+.additionalSections {
+  margin-top: 3rem;
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.highlightsGrid {
+  display: grid;
+  gap: 2rem;
+}
+
+.highlightSection h4 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.highlightProducts {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.highlightCard {
+  flex: 1 1 200px;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlightCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+}
+
+.highlightCard img {
+  width: 100%;
+  border-radius: 0.5rem;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.highlightCard:hover img {
+  transform: scale(1.05);
+}
+
+.highlightInfo p {
+  margin: 0.25rem 0 0;
+  font-size: 0.95rem;
+}
+
+.price {
+  font-weight: 700;
+  color: #2575fc;
+}

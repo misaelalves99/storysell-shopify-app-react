@@ -9,9 +9,9 @@ interface Props {
 
 export const CollectionsCarousel: React.FC<Props> = ({ collections }) => {
   return (
-    <section>
-      <h2>Reels por Coleção</h2>
-      <div className={styles.carouselGrid}>
+    <section className={styles.section}>
+      <h2 className={styles.title}>Reels por Coleção</h2>
+      <div className={styles.carousel}>
         {collections.map((col) => (
           <div key={col.id} className={styles.collectionCard}>
             <h3>{col.name}</h3>

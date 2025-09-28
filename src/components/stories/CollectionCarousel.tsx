@@ -1,11 +1,13 @@
 // storysell-shopify-app/src/components/stories/CollectionCarousel.tsx
 import React, { useEffect, useState } from "react";
-import { Product } from "../../types/product.types";
 import * as fakeApi from "../../lib/fakeApi/fakeCollectionApi";
 import { useBilling } from "../../hooks/useBilling";
+import { Product } from "../../types/product.types";
+import { CollectionCard } from "./CollectionCard";
+import { Highlights } from "./Highlights";
 import styles from "./CollectionCarousel.module.css";
 
-type CollectionType = {
+export type CollectionType = {
   id: string;
   name: string;
   products: Product[];
@@ -49,64 +51,23 @@ export const CollectionCarousel: React.FC = () => {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>Top Collections</h2>
+      <h2 className={styles.title}>Principais coleções</h2>
 
-      {/* Carrossel principal */}
       <div className={styles.carouselWrapper}>
-        <button
-          className={styles.navButton}
-          onClick={handlePrev}
-          aria-label="Coleção anterior"
-        >
+        <button className={styles.navButton} onClick={handlePrev}>
           &lt;
         </button>
 
         <div className={styles.carousel}>
-          <div className={styles.collectionCard}>
-            <h3>{currentCollection.name}</h3>
-            <div className={styles.products}>
-              {currentCollection.products.map((p) => (
-                <div key={p.id} className={styles.productCard}>
-                  <img src={p.images[0]} alt={p.title} />
-                  <p>{p.title}</p>
-                  <p className={styles.price}>R${p.price.toFixed(2)}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <CollectionCard collection={currentCollection} />
         </div>
 
-        <button
-          className={styles.navButton}
-          onClick={handleNext}
-          aria-label="Próxima coleção"
-        >
+        <button className={styles.navButton} onClick={handleNext}>
           &gt;
         </button>
       </div>
 
-      {/* Destaques adicionais */}
-      <div className={styles.additionalSections}>
-        <h3 className={styles.subtitle}>Destaques</h3>
-        <div className={styles.highlightsGrid}>
-          {collections.map((c) => (
-            <div key={c.id} className={styles.highlightSection}>
-              <h4>{c.name}</h4>
-              <div className={styles.highlightProducts}>
-                {c.products.slice(0, 2).map((p) => (
-                  <div key={p.id} className={styles.highlightCard}>
-                    <img src={p.images[0]} alt={p.title} />
-                    <div className={styles.highlightInfo}>
-                      <p>{p.title}</p>
-                      <p className={styles.price}>R${p.price.toFixed(2)}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Highlights collections={collections} />
     </section>
   );
 };

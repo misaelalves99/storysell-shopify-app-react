@@ -1,12 +1,11 @@
-// storysell-shopify-app/src/components/stories/ProductStories.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../types/product.types";
 import * as fakeApi from "../../lib/fakeApi/fakeProductApi";
 import { useBilling } from "../../hooks/useBilling";
-import styles from "./ProductStories.module.css";
+import styles from "./ProductGrid.module.css";
 
-export const ProductStories: React.FC = () => {
+export const ProductGrid: React.FC = () => {
   const { currentPlan } = useBilling();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +20,6 @@ export const ProductStories: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // 🔹 Bloqueia se plano for "free"
   if (!currentPlan || currentPlan.id === "free") return null;
 
   if (loading) return <p>Carregando produtos...</p>;
@@ -29,10 +27,8 @@ export const ProductStories: React.FC = () => {
 
   return (
     <section className={styles.container}>
-      <h2>Product Stories</h2>
-
-      <div className={styles.scrollWrapper}>
-        {products.slice(0, 8).map((product) => (
+      <div className={styles.grid}>
+        {products.map((product) => (
           <div
             key={product.id}
             className={styles.card}
@@ -44,12 +40,12 @@ export const ProductStories: React.FC = () => {
                 alt={product.title}
                 className={styles.productImage}
               />
-              <div className={styles.overlay}>
-                <p className={styles.price}>R$ {product.price.toFixed(2)}</p>
-                <button className={styles.cta}>Ver</button>
-              </div>
             </div>
-            <h3>{product.title}</h3>
+            <div className={styles.info}>
+              <h3>{product.title}</h3>
+              <p className={styles.price}>R$ {product.price.toFixed(2)}</p>
+              <button className={styles.cta}>Ver Detalhes</button>
+            </div>
           </div>
         ))}
       </div>

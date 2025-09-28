@@ -1,14 +1,17 @@
+/* storysell-shopify-app/src/components/stories/CollectionCarousel.module.css */
+
 .container {
   margin: 3rem auto;
   max-width: 1200px;
   padding: 0 1rem;
 }
 
-h2 {
+.title {
   font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
+  font-family: "Inter", sans-serif;
 }
 
 /* Carrossel */
@@ -28,85 +31,16 @@ h2 {
   font-size: 1.5rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .navButton:hover {
   background: #6a11cb;
+  transform: translateY(-2px);
 }
 
 .carousel {
   flex: 1;
   display: flex;
   justify-content: center;
-}
-
-.collectionCard {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  min-width: 600px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
-}
-
-.collectionCard:hover {
-  transform: translateY(-5px);
-}
-
-.products {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.productCard {
-  flex: 1;
-  text-align: center;
-}
-
-.productCard img {
-  width: 100%;
-  border-radius: 0.5rem;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Sessões adicionais */
-.additionalSections {
-  margin-top: 2rem;
-  display: grid;
-  gap: 2rem;
-}
-
-.highlightSection h4 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.highlightProducts {
-  display: flex;
-  gap: 1rem;
-}
-
-.highlightCard {
-  flex: 1;
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.highlightCard img {
-  width: 100%;
-  border-radius: 0.5rem;
-  height: 150px;
-  object-fit: cover;
-}
-
-.price {
-  font-weight: 700;
-  color: #2575fc;
-  margin-top: 0.5rem;
 }

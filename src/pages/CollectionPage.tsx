@@ -6,7 +6,7 @@ import styles from "./CollectionPage.module.css";
 export const CollectionPage: React.FC = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Collections</h1>
+      <h1 className={styles.title}>Coleções</h1>
       <CollectionCarousel />
     </div>
   );

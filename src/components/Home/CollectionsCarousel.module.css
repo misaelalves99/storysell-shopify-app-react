@@ -1,13 +1,38 @@
 /* storysell-shopify-app/src/components/Home/CollectionsCarousel.module.css */
 
-.carouselGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+.section {
+  margin: 2rem 0;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.carousel {
+  display: flex;
   gap: 1.5rem;
-  padding-bottom: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #bbb transparent;
+  scroll-behavior: smooth;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 4px;
 }
 
 .collectionCard {
+  flex: 0 0 320px; /* largura fixa para cada card */
   background: #fff;
   border-radius: 1rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
@@ -16,6 +41,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  scroll-snap-align: start;
 }
 
 .collectionCard:hover {
@@ -24,7 +50,7 @@
 }
 
 .collectionCard h3 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 1rem;
   text-align: center;
@@ -38,8 +64,8 @@
 }
 
 .products img {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 0.5rem;
 }
@@ -50,19 +76,21 @@
 
 /* Responsivo */
 @media (max-width: 768px) {
-  .carouselGrid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+  .collectionCard {
+    flex: 0 0 260px;
   }
   .products img {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
   }
 }
 
 @media (max-width: 480px) {
+  .collectionCard {
+    flex: 0 0 220px;
+  }
   .products img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
   }
 }
