@@ -1,6 +1,6 @@
 // storysell-shopify-app/src/components/stories/CollectionCard.tsx
 import React from "react";
-import { CollectionType } from "./CollectionCarousel";
+import { CollectionType } from "../../types/product.types";
 import { ProductCard } from "./ProductCard";
 import styles from "./CollectionCard.module.css";
 

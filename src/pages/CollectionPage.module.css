@@ -1,3 +1,44 @@
+.pageContainer {
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  font-family: "Inter", sans-serif;
+}
+
 .title {
+  font-size: 2.5rem;
+  font-weight: 700;
   text-align: center;
+  color: #222;
+  margin-bottom: 1rem;
+}
+
+/* Container elegante com degradê */
+.carouselContainer {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  padding: 2.5rem 2rem;
+  border-radius: 1.25rem;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carouselContainer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 45px rgba(0,0,0,0.2);
+}
+
+/* Ajuste visual interno para o carousel */
+.carouselContainer .carousel {
+  background: rgba(255, 255, 255, 0.05); /* leve overlay branco */
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+/* Loader */
+.loader {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #fff;
 }

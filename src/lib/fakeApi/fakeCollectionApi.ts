@@ -5,52 +5,52 @@ import { Product } from "../../types/product.types";
 const fakeCollections = [
   {
     id: "c1",
-    name: "Summer Collection",
+    name: "Coleção Verão",
     products: [fakeProductApi.getProducts().then(p => p[0]), fakeProductApi.getProducts().then(p => p[2])]
   },
   {
     id: "c2",
-    name: "Winter Collection",
+    name: "Coleção Inverno",
     products: [fakeProductApi.getProducts().then(p => p[1]), fakeProductApi.getProducts().then(p => p[5])]
   },
   {
     id: "c3",
-    name: "Accessories",
+    name: "Acessórios",
     products: [fakeProductApi.getProducts().then(p => p[3]), fakeProductApi.getProducts().then(p => p[4])]
   },
   {
     id: "c4",
-    name: "Footwear",
+    name: "Calçados",
     products: [fakeProductApi.getProducts().then(p => p[6]), fakeProductApi.getProducts().then(p => p[7])]
   },
   {
     id: "c5",
-    name: "T-Shirts",
+    name: "Camisetas",
     products: [fakeProductApi.getProducts().then(p => p[8]), fakeProductApi.getProducts().then(p => p[9])]
   },
   {
     id: "c6",
-    name: "Jackets",
+    name: "Jaquetas",
     products: [fakeProductApi.getProducts().then(p => p[10]), fakeProductApi.getProducts().then(p => p[11])]
   },
   {
     id: "c7",
-    name: "Bags",
+    name: "Bolsas",
     products: [fakeProductApi.getProducts().then(p => p[12]), fakeProductApi.getProducts().then(p => p[13])]
   },
   {
     id: "c8",
-    name: "Hats",
+    name: "Chapéus",
     products: [fakeProductApi.getProducts().then(p => p[14]), fakeProductApi.getProducts().then(p => p[15])]
   },
   {
     id: "c9",
-    name: "Watches",
+    name: "Relógios",
     products: [fakeProductApi.getProducts().then(p => p[16]), fakeProductApi.getProducts().then(p => p[17])]
   },
   {
     id: "c10",
-    name: "Special Collection",
+    name: "Coleção Especial",
     products: [fakeProductApi.getProducts().then(p => p[18]), fakeProductApi.getProducts().then(p => p[19])]
   },
 ];
@@ -66,6 +66,6 @@ export const getCollections = async (): Promise<{ id: string; name: string; prod
 export const getCollectionById = async (id: string): Promise<{ id: string; name: string; products: Product[] }> => {
   const all = await getCollections();
   const found = all.find(c => c.id === id);
-  if (!found) throw new Error("Collection not found");
+  if (!found) throw new Error("Coleção não encontrada");
   return found;
 };

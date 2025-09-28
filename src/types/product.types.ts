@@ -9,3 +9,9 @@ export type Product = {
   collectionId?: string;
   available: boolean;
 };
+
+export interface CollectionType {
+  id: string;
+  name: string;
+  products: Product[];
+}
